@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Ev time:</strong>
+  <%= @stage.ev_time %>
+</p>
+
+<p>
+  <strong>App:</strong>
+  <%= @stage.app_id %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @stage.code %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @stage.description %>
+</p>
+
+<p>
+  <strong>Conversation:</strong>
+  <%= @stage.conversation_id %>
+</p>
+
+<p>
+  <strong>System:</strong>
+  <%= @stage.system %>
+</p>
+
+<p>
+  <strong>Sub system:</strong>
+  <%= @stage.sub_system %>
+</p>
+
+<%= link_to 'Edit', edit_stage_path(@stage) %> |
+<%= link_to 'Back', stages_path %>

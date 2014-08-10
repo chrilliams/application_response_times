@@ -1,0 +1,28 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: DLO
+  start_time: 2014-04-08 14:14:36
+  finish_time: 2014-04-08 14:14:37
+  duration: 1
+  system: DVLA_Web
+  sub_system: DVLA_Web
+  ref_datum: one
+
+two:
+  name: SOMWeb
+  start_time: 2014-04-18 14:14:36
+  finish_time: 2014-04-18 14:15:36
+  duration: 60
+  system: DVLA_Web
+  sub_system: DVLA_Web
+  ref_datum: two 
+
+three:
+  name: DLO
+  start_time: 2014-04-18 14:11:36
+  finish_time: 2014-04-18 14:12:36
+  duration: 60
+  system: DVLA_Web
+  sub_system: DVLA_Web
+  ref_datum: one 

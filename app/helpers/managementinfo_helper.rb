@@ -1,0 +1,2 @@
+module ManagementinfoHelper
+end

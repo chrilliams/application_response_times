@@ -1,0 +1,21 @@
+  <div class="form-group">
+    <div class="col-md-2">
+      <%= f.label :metric_id %>
+      <%= f.text_field :metric_id, size: 15, class: "form-control" %>
+    </div>
+    <div class="col-md-3">
+      <%= f.label :current_sla_kpi %>
+      <div class="input-group">
+        <%= f.text_field :current_sla_kpi, size: 15, class: "form-control" %>
+        <div class="input-group-addon">seconds</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <%= f.label :target %>
+      <div class="input-group">
+        <%= f.text_field :target, size: 15, class: "form-control" %>
+        <div class="input-group-addon">seconds</div>
+      </div>
+    </div>
+  </div>
+

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Application Response Times</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+  <div class="container">
+   <div class="masthead">
+    <h3 class=text-muted">Application Response Times</h3>
+    <nav class="navbar navbar-inverse" role="navigation">
+     <div class="container-fluid">
+      <div class="navbar-header">
+       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+       </button>
+      </div>
+      <div class="collapse navbar-collapse" id="menu1">
+       <ul class="nav navbar-nav">
+        <li <%= active_item? :events %>><%= link_to 'Events', events_path %></li>
+        <li <%= active_item? :ref_data %>><%= link_to 'Reference', ref_data_path %></li>
+       </ul>
+      </div>
+     </div>
+    </nav>
+   </div>
+
+    <%= yield %>
+  
+ </div><!-- /.container -->
+
+
+</body>
+</html>

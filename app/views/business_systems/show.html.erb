@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Business service name:</strong>
+  <%= @business_system.business_service_name %>
+</p>
+
+<p>
+  <strong>Metric:</strong>
+  <%= @business_system.metric_id %>
+</p>
+
+<p>
+  <strong>Current sla kpi:</strong>
+  <%= @business_system.current_sla_kpi %>
+</p>
+
+<p>
+  <strong>Target:</strong>
+  <%= @business_system.target %>
+</p>
+
+<%= link_to 'Edit', edit_business_system_path(@business_system) %> |
+<%= link_to 'Back', business_systems_path %>

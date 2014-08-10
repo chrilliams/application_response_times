@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  business_service_name: MyString
+  metric_id: 1
+  current_sla_kpi: 9.99
+  target: 9.99
+
+two:
+  business_service_name: MyString
+  metric_id: 1
+  current_sla_kpi: 9.99
+  target: 9.99

@@ -1,0 +1,117 @@
+<div class="panel panel-default">
+  <div class="panel-body" id="graph-panel">
+<script>
+    $(document).ready(function ()
+    {
+     var canvas = document.getElementById("myCanvas");
+        canvas.width = $("#graph-panel").width()-10;
+        RGraph.Reset(canvas);
+        RGraph.Clear(canvas);
+        
+        // Reset the translation fix so that it gets applied again
+        canvas.__rgraph_aa_translated__ = false;
+
+        var data = new Array(<%= @graph_data %>);
+        var labels = new Array(<%= @graph_labels %>);
+
+        var bar = new RGraph.Line('myCanvas', data)
+            .set('gutter.left', 55)
+            .set('hmargin', 5)
+            .draw();
+
+    });
+
+    $(window).resize(function () {
+	var canvas = document.getElementById("myCanvas");
+	if (canvas.width != $("#graph-panel").width()) {
+   		canvas.width = $("#graph-panel").width()-10;
+		RGraph.Reset(canvas);
+		RGraph.Clear(canvas);
+	
+        	// Reset the translation fix so that it gets applied again
+        	canvas.__rgraph_aa_translated__ = false;
+
+        	var data = new Array(<%= @graph_data %>);
+        	var labels = new Array(<%= @graph_labels %>);
+
+        	var bar = new RGraph.Line('myCanvas', data)
+       			.set('gutter.left', 55)
+     			.set('hmargin', 5)
+        		.draw();
+	}
+
+    });
+</script>
+
+<canvas class="container-canvas" id="myCanvas" width="250" height="250">[No canvas support]</canvas>
+
+<h6><small><span class="pull-right">limited to first 1000 events</span></small></h6>
+	
+</script>
+
+  </div>
+</div>
+
+
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">
+    <div class="container-fluid">
+      <div class="dropdown pull-right">
+        <button class="btn btn-default dropdown-toggle dropdown-right" type="button" id="dropdownMenu1" data-toggle="dropdown">
+          <span id="filter_name"><%= @filter.description.pluralize %></span>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+          <% @referenceData.each do |ref| %>
+            <li role="presentation"><%= link_to ref.description.pluralize, params.merge(filter: ref) %></li>
+          <% end %>
+          <li role="presentation" class="divider"></li>
+          <li role="presentation"><%= link_to 'All Events', params.merge(filter: 'all') %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+  <!-- Table -->
+   <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= sortable 'name' %></th>
+          <th><%= sortable 'start_time', 'Start Time' %></th>
+          <th>Finish time</th>
+          <th><%= sortable 'duration' %></th>
+          <th>System</th>
+          <th>Sub system</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @events.each do |event| %>
+	  <!-- changing the tr colour if the duration is too high -->
+	  <% if event.duration > 20000 %>
+	    <tr class="danger">
+	  <% elsif event.duration > 10000 %>
+	    <tr class="warning">
+	  <% else %>
+            <tr>
+	  <% end %>
+            <td><%= event.ref_datum.description %></td>
+            <td><%= event.start_time.strftime('%F %T,%L') %></td>
+            <td><%= event.finish_time.strftime('%F %T,%L') %></td>
+            <td><%= event.duration %> ms</td>
+            <td><%= event.system %></td>
+            <td><%= event.sub_system %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+   </div>
+
+    <%= paginate @events %>
+  </div>
+</div>
+
+
+
+<!--<%= link_to 'New Event', new_event_path %>-->

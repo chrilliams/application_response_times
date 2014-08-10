@@ -1,0 +1,47 @@
+<%  if !flash.empty? %>
+<div class="alert alert-success" role="alert">
+  <%= flash[:notice] %>
+</div>
+
+<% end %>
+<div class="panel panel-default">
+<div class="panel-body" >
+
+
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>Business service name</th>
+      <th>Metric</th>
+      <th>Current sla kpi</th>
+      <th>Target</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @business_systems.each do |business_system| %>
+      <tr>
+        <td><%= business_system.business_service_name %></td>
+        <td><%= business_system.metric_id %></td>
+        <td><%= business_system.current_sla_kpi %></td>
+        <td><%= business_system.target %></td>
+        <td><%= link_to(edit_business_system_path(business_system), class: 'btn-sm btn-warning') do %>
+          <span class="glyphicon glyphicon-pencil"></span> Edit
+        <% end %>
+        </td>
+        <td><%= link_to(business_system, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn-sm btn-danger') do %>
+            <span class="glyphicon glyphicon-trash"></span> Delete
+          <% end %>
+	</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+</div>
+</div>
+
+
+<%= link_to 'New Business system', new_business_system_path, class: "btn btn btn-primary pull-right" %>
+<br/>

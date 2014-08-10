@@ -1,0 +1,45 @@
+<%= form_for(@stage) do |f| %>
+  <% if @stage.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@stage.errors.count, "error") %> prohibited this stage from being saved:</h2>
+
+      <ul>
+      <% @stage.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :ev_time %><br>
+    <%= f.datetime_select :ev_time %>
+  </div>
+  <div class="field">
+    <%= f.label :app_id %><br>
+    <%= f.text_field :app_id %>
+  </div>
+  <div class="field">
+    <%= f.label :code %><br>
+    <%= f.text_field :code %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :conversation_id %><br>
+    <%= f.text_field :conversation_id %>
+  </div>
+  <div class="field">
+    <%= f.label :system %><br>
+    <%= f.text_field :system %>
+  </div>
+  <div class="field">
+    <%= f.label :sub_system %><br>
+    <%= f.text_field :sub_system %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

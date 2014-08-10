@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>File name:</strong>
+  <%= @log_file.file_name %>
+</p>
+
+<p>
+  <strong>Line format:</strong>
+  <%= @log_file.line_format %>
+</p>
+
+<p>
+  <strong>Fields:</strong>
+  <%= @log_file.fields %>
+</p>
+
+<%= link_to 'Edit', edit_log_file_path(@log_file) %> |
+<%= link_to 'Back', log_files_path %>

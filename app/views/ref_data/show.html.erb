@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @ref_datum.code %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @ref_datum.description %>
+</p>
+
+<%= link_to 'Edit', edit_ref_datum_path(@ref_datum) %> |
+<%= link_to 'Back', ref_data_path %>

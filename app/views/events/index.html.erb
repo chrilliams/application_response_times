@@ -1,0 +1,136 @@
+<div class="panel panel-default">
+  <div class="panel-body" id="graph-panel">
+<svg id='chart' height="400px"></svg>
+<!--<h6><small><span class="pull-right">limited to first 1000 events</span></small></h6> -->
+	
+
+  </div>
+</div>
+
+
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">
+    <div class="container-fluid">
+      <div class="dropdown pull-right">
+        <button class="btn btn-default dropdown-toggle dropdown-right" type="button" id="dropdownMenu1" data-toggle="dropdown">
+          <span id="filter_name"><%= @filter.description.pluralize %></span>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+          <% @referenceData.each do |ref| %>
+            <li role="presentation"><%= link_to ref.description.pluralize, params.merge(filter: ref) %></li>
+          <% end %>
+          <li role="presentation" class="divider"></li>
+          <li role="presentation"><%= link_to 'All Events', params.merge(filter: 'all') %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+  <!-- Table -->
+   <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= sortable 'name' %></th>
+          <th><%= sortable 'start_time', 'Start Time' %></th>
+          <th>Finish time</th>
+          <th><%= sortable 'duration' %></th>
+          <th>System</th>
+          <th>Sub system</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @events.each do |event| %>
+	  <!-- changing the tr colour if the duration is too high -->
+	  <% if event.duration > 20000 %>
+	    <tr class="danger">
+	  <% elsif event.duration > 10000 %>
+	    <tr class="warning">
+	  <% else %>
+            <tr>
+	  <% end %>
+            <td><%= event.ref_datum.description %></td>
+            <td><%= event.start_time.strftime('%F %T,%L') %></td>
+            <td><%= event.finish_time.strftime('%F %T,%L') %></td>
+            <td><%= event.duration %> ms</td>
+            <td><%= event.system %></td>
+            <td><%= event.sub_system %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+   </div>
+
+    <%= paginate @events %>
+  </div>
+</div>
+
+
+<%= @filter.id %>
+<!--<%= link_to 'New Event', new_event_path %>-->
+
+
+
+<script>
+nv.addGraph(function() {
+  var chart = nv.models.scatterChart()
+                .showDistX(true)    //showDist, when true, will display those little distribution lines on the axis.
+                .showDistY(true)
+		.margin({left: 90, right: 50})
+                .transitionDuration(100);
+                //.color(d3.scale.category10().range());
+
+  //Configure how the tooltip looks.
+  chart.tooltipContent(function(key) {
+      return '<h5>' + key + '</h5>';
+  });
+
+  //Axis settings
+  //chart.xAxis.tickFormat(d3.format('.02f'));
+  //chart.yAxis.tickFormat(d3.format('.02f'));
+chart.yAxis     //Chart y-axis settings
+      .axisLabel('Time (ms)');
+
+chart.xAxis     //Chart y-axis settings
+      .axisLabel('Date/Time (YYYYMMDDHH)');
+  //We want to show shapes other than circles.
+  chart.scatter.onlyCircles(false);
+
+  var myData = randomData(4,800);
+  d3.select('svg')
+      .datum(myData)
+      .call(chart);
+
+  nv.utils.windowResize(chart.update);
+
+  return chart;
+});
+
+/**************************************
+ * Simple test data generator
+ */
+function randomData(groups, points) { //# groups,# points per group
+  var data = [];
+  var    shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
+      random = d3.random.normal();
+var thesize = Math.random();
+    data.push({
+      key: '<%= @filter.description %>', 
+      values: []
+    });
+
+    <% @graph_data.each do |key, value| %>
+//alert('<%= key %> <%= value %>');
+      data[0].values.push({
+          x: <%= key %>
+        , y: <%= value %>
+//        , size: Math.random()   //Configure the size of each scatter point
+      });
+
+    <% end %>
+
+  return data;
+}
+</script>

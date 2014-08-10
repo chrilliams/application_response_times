@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ev_time: 2014-07-07 10:49:45
+  app_id: MyString
+  code: MyString
+  description: MyString
+  conversation_id: MyString
+  system: MyString
+  sub_system: MyString
+
+two:
+  ev_time: 2014-07-07 10:49:45
+  app_id: MyString
+  code: MyString
+  description: MyString
+  conversation_id: MyString
+  system: MyString
+  sub_system: MyString

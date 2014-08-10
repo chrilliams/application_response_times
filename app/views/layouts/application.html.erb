@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Application Response Times</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+
+    <div class="container">
+      <div class="page-header">
+        <ul class="nav nav-pills pull-right" role="navigation">
+         <li <%= active_item? :events %>><%= link_to 'Events', events_path %></li>
+         <li <%= active_item? :managementinfo %>><%= link_to 'MI', managementinfo_index_path %></li>
+         <li <%= active_item? :business_systems %>><%= link_to 'Setup', business_systems_path %></li>
+        </ul>
+        <h3 class="text-muted">Application Response Times</h3>
+      </div>
+
+   <%= yield %>
+
+     <footer>
+        <p>&copy; Chris Williams 2014</p>
+      </footer>
+    </div> <!-- /container -->
+
+
+
+</body>
+</html>

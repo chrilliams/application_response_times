@@ -1,0 +1,110 @@
+<%= form_for(@business_system, html: {class: 'form-horizontal', role: 'form'}) do |f| %>
+
+  <% if @business_system.errors.any? %>
+    <div class="alert alert-danger" role="alert" id="error_explanation">
+
+      Please correct the following <%= pluralize(@business_system.errors.count, "error") %>:
+      <ul>
+      <% @business_system.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="form-group">
+    <div class="col-md-8">
+      <%= f.label :business_service_name, size: 50 %>
+      <%= f.text_field :business_service_name, size: 50, placeholder: "This appears on the MI report", class: "form-control" %>
+    </div>
+  </div>
+
+
+
+
+<!-------->
+<div id="content">
+    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a href="#metrics" data-toggle="tab">Metrics</a></li>
+        <li><a href="#logging_codes" data-toggle="tab">Logging Codes</a></li>
+        <li><a href="#files" data-toggle="tab">Files</a></li>
+    </ul>
+    <div id="my-tab-content" class="tab-content">
+        <br/>
+<!-- metrics -->
+        <div class="tab-pane active" id="metrics">
+          <div class= "container">
+            <div class="form-group">
+              <div class="col-md-2">
+                <%= f.label :metric_id %>
+                <%= f.text_field :metric_id, size: 15, class: "form-control" %>
+              </div>
+              <div class="col-md-3">
+                <%= f.label :current_sla_kpi %>
+                <div class="input-group">
+                  <%= f.text_field :current_sla_kpi, size: 15, class: "form-control" %>
+                  <div class="input-group-addon">seconds</div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <%= f.label :target %>
+                <div class="input-group">
+                  <%= f.text_field :target, size: 15, class: "form-control" %>
+                  <div class="input-group-addon">seconds</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+<!-- end of metrics -->
+<!-- logging codes -->
+        <div class="tab-pane" id="logging_codes">
+          <div class= "container">
+           <div class="col-md-3"><label>Code</label></div>
+           <div class="col-md-7"><label>Description</label></div>
+           <div class="col-md-2">
+           </div>
+
+
+              <%= f.fields_for :ref_datum do |ref_field| %>
+                <%= render 'ref_datum_fields', :f => ref_field %>
+              <% end %>
+            <div class="pull-right">
+              <!-- <%= link_to_add_association 'add task', f, :ref_datum %> -->
+	      <%= link_to_add_association( f, :ref_datum, class:'btn btn-success' ) do %>
+  		<span class="glyphicon glyphicon-plus-sign"></span>
+  		Add Code
+  		<% end %>
+
+            </div>
+	    <br/>
+          </div>
+        </div>
+<!-- end of logging codes -->
+<!-- files -->
+        <div class="tab-pane" id="files">
+              <%= f.fields_for :log_file do |log_files| %>
+                <%= render 'log_files_fields', :f => log_files %>
+              <% end %>
+        </div>
+<!-- end of files -->
+    </div>
+</div>
+<br/>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#tabs').tab();
+    });
+</script> 
+  
+
+  <div class="pull-right">
+    <%= f.submit 'Save Business Service', class: 'btn btn-primary' %>
+  </div>
+
+<% end %>
+
+
+

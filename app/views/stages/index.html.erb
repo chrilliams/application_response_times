@@ -1,0 +1,39 @@
+<h1>Listing stages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ev time</th>
+      <th>App</th>
+      <th>Code</th>
+      <th>Description</th>
+<!--      <th>Conversation</th>
+      <th>System</th>
+      <th>Sub system</th>
+      <th colspan="3"></th>
+-->
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @stages.each do |stage| %>
+      <tr>
+        <td><%= stage.ev_time %></td>
+        <td><%= stage.app_id %></td>
+        <td><%= stage.code %></td>
+        <td><%= stage.description %></td>
+  <!--      <td><%= stage.conversation_id %></td>
+        <td><%= stage.system %></td>
+        <td><%= stage.sub_system %></td>
+-->
+        <td><%= link_to 'Show', stage %></td>
+        <td><%= link_to 'Edit', edit_stage_path(stage) %></td>
+        <td><%= link_to 'Destroy', stage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Stage', new_stage_path %>

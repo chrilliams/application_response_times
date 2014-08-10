@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: 1111
+  description: DLO
+  business_system: one
+
+two:
+  code: 2222
+  description: SOMWeb
+  business_system: one
