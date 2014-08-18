@@ -85,16 +85,26 @@ nv.addGraph(function() {
   //Configure how the tooltip looks.
   chart.tooltipContent(function(key) {
       return '<h5>' + key + '</h5>';
-  });
+});
 
+//  var d = "2014071004";
+//alert(d3.time.format("%Y%m%d%H").parse(d));
+  
   //Axis settings
+//chart.xScale(d3.time.scale());
   //chart.xAxis.tickFormat(d3.format('.02f'));
+  //chart.xAxis.tickFormat(d3.time.format("%Y%m%d%H").parse);
   //chart.yAxis.tickFormat(d3.format('.02f'));
 chart.yAxis     //Chart y-axis settings
       .axisLabel('Time (ms)');
 
 chart.xAxis     //Chart y-axis settings
-      .axisLabel('Date/Time (YYYYMMDDHH)');
+.tickFormat(function(d) { return d3.time.format('%Y/%m/%d %H')(new Date(d)) })
+      //.tickFormat(function(d) { return d3.time.format('%Y')(d3.time.format("%Y%m%d%H").parse(d)); })
+      //.tickFormat(function(d) { return (new Date(1025409600000)); })
+      //.tickFormat(function(d) { return (d3.time.format('%m/%d/%Y')).parse(new Date(1025409600000)); })
+      .axisLabel('Date/Time (YYYY/MM/DD HH)')
+      ;
   //We want to show shapes other than circles.
   chart.scatter.onlyCircles(false);
 
@@ -113,6 +123,7 @@ chart.xAxis     //Chart y-axis settings
  */
 function randomData(groups, points) { //# groups,# points per group
   var data = [];
+  var format = d3.time.format("%Y%m%d%H");
   var    shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
       random = d3.random.normal();
 var thesize = Math.random();
@@ -123,11 +134,22 @@ var thesize = Math.random();
 
     <% @graph_data.each do |key, value| %>
 //alert('<%= key %> <%= value %>');
-      data[0].values.push({
-          x: <%= key %>
-        , y: <%= value %>
+ //var d = d3.time.format("%Y%m%d%H").parse('<%= key %>');
+ var d = d3.time.format("%Y%m%d%H").parse('<%= key %>');
+ var key = Date.parse('<%= key %>');
+//document.write(d);
+ //var item = { x: <%= key %>,  y: <%= value %> };
+ //var item = { x: <%= key %>,  y: <%= value %> };
+ var item={};
+    item.x = key;
+    item.y = <%= value %>;
+ 
+data[0].values.push(item);
+//      data[0].values.push({
+//          x: <%= key %>
+//        , y: <%= value %>
 //        , size: Math.random()   //Configure the size of each scatter point
-      });
+//      });
 
     <% end %>
 
