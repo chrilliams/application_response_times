@@ -27,7 +27,8 @@ class Stats
         ## find all the files matching the regex
         Dir[files.file_name].each do |file_name|
           puts "Reading #{file_name}"
-          file = File.open(file_name,'r')
+          file_gz = File.open(file_name,'r')
+          file = gz = Zlib::GzipReader.new(file_gz)
    
           ## once the file is open continue getting the log file information
           #columns_and_type = files.fields.split(',')

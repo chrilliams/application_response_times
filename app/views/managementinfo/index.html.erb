@@ -50,7 +50,7 @@
               <td><%= mi.current_sla_kpi.to_s %></td>
               <% period_id = 1 %>
               <% @periods.each do |period| %>
-                <td><%= mi.period_max(period_id) %></td>
+                <td><%= mi.period_hourly_max(period_id) %></td>
                 <% period_id +=1 %>
               <% end %>
               <td rowspan="2"><%= mi.target %></td>

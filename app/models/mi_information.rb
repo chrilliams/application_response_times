@@ -26,10 +26,17 @@ class MIInformation
   def period_max (period_number)
     first_date = periods.unshift(@start_date)[period_number -1]
     last_date = periods.unshift(@start_date)[period_number]
-   max=Event.get_business_service_events(@business_service_id).all_between_dates(first_date, last_date).order('duration DESC').first
+    max=Event.get_business_service_events(@business_service_id).all_between_dates(first_date, last_date).order('duration DESC').first
     max.nil? ? '' : (max.duration.to_f / TIME_UNIT ).round(ROUND)
-
   end
+  
+  def period_hourly_max (period_number)
+    first_date = periods.unshift(@start_date)[period_number -1]
+    last_date = periods.unshift(@start_date)[period_number]
+    max=Event.get_business_service_events(@business_service_id).all_between_dates(first_date, last_date).hourlybreakdown.values.max
+    max.nil? ? '' : (max.to_f / TIME_UNIT ).round(ROUND)
+  end
+
 
   def period_average (period_number)
     first_date = periods.unshift(@start_date)[period_number -1]

@@ -28,7 +28,7 @@ class EventsProcess
     #delete_unwanted_from_stage
 
     i=0
-    batch_for_delete= []
+    #batch_for_delete= []
     values = []
 
     Stage.find_each(batch_size: @batch_size) do |record_started|
@@ -51,10 +51,10 @@ class EventsProcess
 		record_started.sub_system,
 		related_RefDatum
 	  ]                
-          batch_for_delete << found_completed.id
+          #batch_for_delete << found_completed.id
         end
 
-        batch_for_delete << record_started.id
+        #batch_for_delete << record_started.id
         #record_started.destroy
  
       end
@@ -63,7 +63,7 @@ class EventsProcess
         Event.import @columns, values
         #puts "deleting batch at: " +i.to_s
         #Stage.delete( batch_for_delete )
-        batch_for_delete =[]
+        #batch_for_delete =[]
         values=[]
       end
       i=i+1

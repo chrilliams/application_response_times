@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140724194059) do
+ActiveRecord::Schema.define(version: 20140818170816) do
 
   create_table "business_systems", force: true do |t|
     t.string   "business_service_name"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20140724194059) do
   end
 
   add_index "events", ["ref_datum_id"], name: "index_events_on_ref_datum_id"
+  add_index "events", ["start_time"], name: "index_events_on_start_time"
 
   create_table "log_files", force: true do |t|
     t.string   "file_name"
@@ -68,5 +69,8 @@ ActiveRecord::Schema.define(version: 20140724194059) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "stages", ["app_id"], name: "index_stages_on_app_id"
+  add_index "stages", ["code"], name: "index_stages_on_code"
 
 end
