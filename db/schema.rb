@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20140818170816) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "business_systems", force: true do |t|
     t.string   "business_service_name"
     t.integer  "metric_id"
@@ -34,8 +37,8 @@ ActiveRecord::Schema.define(version: 20140818170816) do
     t.integer  "ref_datum_id"
   end
 
-  add_index "events", ["ref_datum_id"], name: "index_events_on_ref_datum_id"
-  add_index "events", ["start_time"], name: "index_events_on_start_time"
+  add_index "events", ["ref_datum_id"], name: "index_events_on_ref_datum_id", using: :btree
+  add_index "events", ["start_time"], name: "index_events_on_start_time", using: :btree
 
   create_table "log_files", force: true do |t|
     t.string   "file_name"
@@ -46,7 +49,7 @@ ActiveRecord::Schema.define(version: 20140818170816) do
     t.integer  "business_system_id"
   end
 
-  add_index "log_files", ["business_system_id"], name: "index_log_files_on_business_system_id"
+  add_index "log_files", ["business_system_id"], name: "index_log_files_on_business_system_id", using: :btree
 
   create_table "ref_data", force: true do |t|
     t.string   "code"
@@ -56,7 +59,7 @@ ActiveRecord::Schema.define(version: 20140818170816) do
     t.integer  "business_system_id"
   end
 
-  add_index "ref_data", ["business_system_id"], name: "index_ref_data_on_business_system_id"
+  add_index "ref_data", ["business_system_id"], name: "index_ref_data_on_business_system_id", using: :btree
 
   create_table "stages", force: true do |t|
     t.datetime "ev_time"
@@ -70,7 +73,7 @@ ActiveRecord::Schema.define(version: 20140818170816) do
     t.datetime "updated_at"
   end
 
-  add_index "stages", ["app_id"], name: "index_stages_on_app_id"
-  add_index "stages", ["code"], name: "index_stages_on_code"
+  add_index "stages", ["app_id"], name: "index_stages_on_app_id", using: :btree
+  add_index "stages", ["code"], name: "index_stages_on_code", using: :btree
 
 end

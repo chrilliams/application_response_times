@@ -43,5 +43,5 @@ gem 'activerecord-import'
 gem 'bootstrap-sass'
 gem 'kaminari'
 gem 'cocoon'
-gem 'simple_form'
-
+#gem 'simple_form'
+gem 'pg'

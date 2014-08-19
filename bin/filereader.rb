@@ -39,9 +39,7 @@ class Stats
             columns_and_types[column] = value
           end
           columns = columns_and_types.keys
-
           regex_dDMS = /#{files.line_format}/
-   
           ## get the logging_codes
           logging_codes = bs.ref_datum.pluck('code')
           values = []
@@ -67,7 +65,7 @@ class Stats
 		  format_column(ary_captures[2],columns_and_types.values[2]),
 		  format_column(ary_captures[3],columns_and_types.values[3]),
 		  format_column(ary_captures[4],columns_and_types.values[4]),
-		  format_column(ary_captures[5],columns_and_types.values[5]),
+	          format_column(ary_captures[5],columns_and_types.values[5]),
 		  format_column(ary_captures[6],columns_and_types.values[6])
 	        ]
               end
@@ -77,33 +75,6 @@ class Stats
           puts "logfile import complete"
 
         end 
-#puts Dir['/home/player/Desktop/EVL_logs/phl-EVLDMS_a_ms1.log*']
-       
-        #file.each_line do |line|
-          #if line.match(/DVLA_SCHEDULER/)
-            ##puts "dvla_scheduler" ## going to ignore for the first sprint
-          #elsif line.include? 'asyncDelivery'
-            ##puts "asyncDelivery"
-          #elsif line.include? 'SOMBrowseSiteRequestService'
-            ##puts "SOMBrowseSiteRequestService"
-          #elsif line.match(regex_dDMS)
-            #ary_captures = line.match(regex_dDMS).captures
-            #if logging_codes.include?( ary_captures[2].delete("\'").gsub(/\_0[1-9]\_/,'_') )
-              ##values.push [DateTime.strptime( ary_captures[0], "%Y-%m-%d %H:%M:%S,%L"),
-              #values.push [ary_captures[0],DateTime.strptime( ary_captures[1], "%Y/%m/%d %H:%M:%S.%L"),
-                #ary_captures[2].delete("\'"),
-                #ary_captures[3].delete("\'"),
-                #ary_captures[4].delete("\'"),
-                #ary_captures[5].delete("\'"),
-                #ary_captures[6].delete("\'")]
-              
-            #end
-          #else
-            #puts "unexpected line #{line}"
-          #end 
-        #end
-        # complete inserts
-        #Stage.import columns, values
       end
     end
   end
@@ -120,7 +91,8 @@ class Stats
   Stage.delete_all 
   puts "Stage table deleted"
   puts "running import"
-  puts bench = Benchmark.measure { Stats.new.process_file_import }
+  #puts bench = Benchmark.measure { Stats.new.process_file_import }
+   Stats.new.process_file_import 
 
 
   
