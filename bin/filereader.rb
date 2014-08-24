@@ -1,18 +1,14 @@
-#!/usr/bin/env ruby
+# /usr/bin/env ruby
 class Stats
 
 
-  require 'benchmark'
-  APP_PATH = File.expand_path('../../config/application',  __FILE__)
-  require File.expand_path('../../config/boot',  __FILE__)
-  require APP_PATH
-  # set Rails.env here if desired
-  Rails.application.require_environment!
+#  require 'benchmark'
 
   def initialize
+   
     #@file = File.open('/home/player/Desktop/test.log','r')
     @business_systems = BusinessSystem.all
-    #@batch_size = 50000
+    @batch_size = 100000
 
     
   end
@@ -26,7 +22,7 @@ class Stats
       if !files.nil?
         ## find all the files matching the regex
         Dir[files.file_name].each do |file_name|
-          puts "Reading #{file_name}"
+          puts "Processing #{file_name}"
           file_gz = File.open(file_name,'r')
           file = gz = Zlib::GzipReader.new(file_gz)
    
@@ -45,6 +41,7 @@ class Stats
           values = []
 
 
+          time_to_process_files = Benchmark.realtime{
           ## loop through each line of the file and try to process to Stage
           file.each_line do |line|
             ## match the line from the regex in the setup
@@ -71,9 +68,13 @@ class Stats
               end
             end
           end
-          Stage.import columns, values
-          puts "logfile import complete"
-
+         }
+         puts " time to process file: #{time_to_process_files}s"
+         bench = Benchmark.realtime {
+           values.each_slice(@batch_size){|batch| Stage.import columns, batch }
+         }
+         puts " time to write to database: #{bench}s"
+         values = []
         end 
       end
     end
@@ -86,13 +87,10 @@ class Stats
       value.delete("\'")
     end
   end
-
-#  puts bench = Benchmark.measure { Stats.new.process_file_active_record }
+  puts Rails.env
   Stage.delete_all 
-  puts "Stage table deleted"
-  puts "running import"
-  #puts bench = Benchmark.measure { Stats.new.process_file_import }
-   Stats.new.process_file_import 
+  puts bench = Benchmark.realtime { Stats.new.process_file_import }
+  puts "total time to process: #{bench}s"
 
 
   
