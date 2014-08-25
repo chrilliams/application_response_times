@@ -1,0 +1,156 @@
+
+<div class="row">
+<div class="col-md-3">
+<div class="list-group">
+  <% @refDatum.each do |ref| %>
+   <% if params[:filter] == ref.id.to_s %>
+     <%= link_to ref.description.pluralize, params.merge(filter: ref), class:'list-group-item active'%>
+   <% else %>
+     <%= link_to ref.description.pluralize, params.merge(filter: ref), class:'list-group-item'%>
+   <% end %>
+  <% end %>
+</div>
+</div>
+
+<div class="col-md-9">
+<div class="panel" id="graph-panel">
+<svg id='chart' height="400px"></svg>
+<!--<h6><small><span class="pull-right">limited to first 1000 events</span></small></h6> -->
+
+
+  </div>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Hour</th>
+      <th>Minimum</th>
+      <th>Average</th>
+      <th>Maximum</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @hourlies.each do |hourly| %>
+      <tr>
+        <td><%= hourly.hour.strftime("%Y-%m-%d %H:00")  %></td>
+        <td><%= (hourly.minimum/1000).round(2) %></td>
+        <td><%= (hourly.average/1000).round(2) %></td>
+        <td><%= (hourly.maximum/1000).round(2) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+</div>
+
+
+<script>
+nv.addGraph(function() {
+  var chart = nv.models.scatterChart()
+                .showDistX(false)    //showDist, when true, will display those little distribution lines on the axis.
+                .showDistY(true)
+                .margin({left: 90, right: 50})
+                .transitionDuration(100);
+                //.color(d3.scale.category10().range());
+
+  //Configure how the tooltip looks.
+  chart.tooltipContent(function(key) {
+      return '<h5>' + key + '</h5>';
+});
+
+//  var d = "2014071004";
+//alert(d3.time.format("%Y%m%d%H").parse(d));
+  
+  //Axis settings
+//chart.xScale(d3.time.scale());
+  //chart.xAxis.tickFormat(d3.format('.02f'));
+  //chart.xAxis.tickFormat(d3.time.format("%Y%m%d%H").parse);
+  //chart.yAxis.tickFormat(d3.format('.02f'));
+chart.yAxis     //Chart y-axis settings
+      .axisLabel('Time (ms)');
+
+chart.xAxis     //Chart y-axis settings
+.tickFormat(function(d) { return d3.time.format('%Y/%m/%d %H')(new Date(d)) })
+      //.tickFormat(function(d) { return d3.time.format('%Y')(d3.time.format("%Y%m%d%H").parse(d)); })
+      //.tickFormat(function(d) { return (new Date(1025409600000)); })
+      //.tickFormat(function(d) { return (d3.time.format('%m/%d/%Y')).parse(new Date(1025409600000)); })
+      .axisLabel('Date/Time (YYYY/MM/DD HH)')
+      ;
+  //We want to show shapes other than circles.
+  chart.scatter.onlyCircles(false);
+
+  var myData = randomData(4,800);
+  d3.select('svg')
+      .datum(myData)
+      .call(chart);
+
+  nv.utils.windowResize(chart.update);
+
+  return chart;
+});
+
+/**************************************
+ * Simple test data generator
+ */
+function randomData(groups, points) { //# groups,# points per group
+  var data = [];
+  var    shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
+      random = d3.random.normal();
+//averages
+    data.push({
+      key: 'average', 
+      values: []
+    });
+
+    <% @hourlies.each do |eachhour| %>
+      var key = Date.parse('<%= eachhour.hour.strftime("%FT%R") %>');
+      var item={};
+      item.x = key;
+      item.y = <%= eachhour.average %>;
+      item.shape = 'circle';
+ 
+data[0].values.push(item);
+    <% end %>
+
+//maximums
+    data.push({
+      key: 'maximum', 
+      values: []
+    });
+
+    <% @hourlies.each do |eachhour| %>
+      var key = Date.parse('<%= eachhour.hour.strftime("%FT%R") %>');
+      var item={};
+      item.x = key;
+      item.y = <%= eachhour.maximum %>;
+      item.shape = 'triangle-down';
+ 
+data[1].values.push(item);
+    <% end %>
+
+
+//minimums
+    data.push({
+      key: 'minimum', 
+      values: []
+    });
+
+    <% @hourlies.each do |eachhour| %>
+      var key = Date.parse('<%= eachhour.hour.strftime("%FT%R") %>');
+      var item={};
+      item.x = key;
+      item.y = <%= eachhour.minimum %>;
+      item.shape = 'triangle-up';
+ 
+data[2].values.push(item);
+    <% end %>
+
+
+
+  return data;
+}
+</script>
+
+

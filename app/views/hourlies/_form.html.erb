@@ -1,0 +1,33 @@
+<%= form_for(@hourly) do |f| %>
+  <% if @hourly.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@hourly.errors.count, "error") %> prohibited this hourly from being saved:</h2>
+
+      <ul>
+      <% @hourly.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :hour %><br>
+    <%= f.datetime_select :hour %>
+  </div>
+  <div class="field">
+    <%= f.label :maximum %><br>
+    <%= f.text_field :maximum %>
+  </div>
+  <div class="field">
+    <%= f.label :minimum %><br>
+    <%= f.text_field :minimum %>
+  </div>
+  <div class="field">
+    <%= f.label :average %><br>
+    <%= f.text_field :average %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

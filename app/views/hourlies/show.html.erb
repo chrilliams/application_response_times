@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Hour:</strong>
+  <%= @hourly.hour %>
+</p>
+
+<p>
+  <strong>Maximum:</strong>
+  <%= @hourly.maximum %>
+</p>
+
+<p>
+  <strong>Minimum:</strong>
+  <%= @hourly.minimum %>
+</p>
+
+<p>
+  <strong>Average:</strong>
+  <%= @hourly.average %>
+</p>
+
+<%= link_to 'Edit', edit_hourly_path(@hourly) %> |
+<%= link_to 'Back', hourlies_path %>

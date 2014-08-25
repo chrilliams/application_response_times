@@ -3,6 +3,7 @@ module ApplicationHelper
     'class="active"'.html_safe if controller_name.to_sym == item
   end
 
+
   def sortable( column, title = nil )
     title ||= column.titleize
     #direction = column == sort_column && sort_direction == 'asc' ? 'desc' : 'asc'

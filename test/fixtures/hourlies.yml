@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  hour: 2014-08-25 12:03:42
+  maximum: 1.5
+  minimum: 1.5
+  average: 1.5
+
+two:
+  hour: 2014-08-25 12:03:42
+  maximum: 1.5
+  minimum: 1.5
+  average: 1.5

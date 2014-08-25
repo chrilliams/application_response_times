@@ -32,6 +32,10 @@
             <th>Response Times</th>
             <th>Current SLA KPI</th>
             <% period_id = 1 %>
+            <% @periods.each do |period| %>
+              <th>period_<%= period_id %> <small><%= period-1 %></small></th>
+              <% period_id +=1 %>
+            <% end %>
             <th>Target</th>
 	    <th>Achieved</th>
 	    <th>Monthly Average</th>

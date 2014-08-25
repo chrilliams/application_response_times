@@ -12,7 +12,6 @@ class MIInformation
     #  pull back all the business system information from the database
     @business_system=BusinessSystem.find(@business_service_id)
     @business_service_name=@business_system.business_service_name
-#    @all_refdatum=RefDatum.find_by_business_system_id(@business_service_id).description
     @metric_id=@business_system.metric_id
     @current_sla_kpi=@business_system.current_sla_kpi
     @target=@business_system.target
@@ -33,7 +32,8 @@ class MIInformation
   def period_hourly_max (period_number)
     first_date = periods.unshift(@start_date)[period_number -1]
     last_date = periods.unshift(@start_date)[period_number]
-    max=Event.get_business_service_events(@business_service_id).all_between_dates(first_date, last_date).hourlybreakdown.values.max
+    max=Hourly.business_service_hourlies(@business_service_id).between_dates(first_date, last_date).order('average desc').first.average
+    #max=Event.get_business_service_events(@business_service_id).all_between_dates(first_date, last_date).hourlybreakdown.values.max
     max.nil? ? '' : (max.to_f / TIME_UNIT ).round(ROUND)
   end
 
@@ -41,7 +41,7 @@ class MIInformation
   def period_average (period_number)
     first_date = periods.unshift(@start_date)[period_number -1]
     last_date = periods.unshift(@start_date)[period_number]
-    durations=Event.get_business_service_events(@business_service_id).all_between_dates(first_date, (last_date)).pluck(:duration)
+    durations=Hourly.business_service_hourlies(@business_service_id).between_dates(first_date, (last_date)).pluck(:average)
     durations.size >0 ? (durations.sum.to_f / durations.size / TIME_UNIT).round(ROUND) : ''
 
   end
@@ -51,7 +51,7 @@ class MIInformation
   end
 
   def month_average
-    durations=Event.get_business_service_events(@business_service_id).all_during_year_and_month(year_month).pluck(:duration)
+    durations=Hourly.business_service_hourlies(@business_service_id).during_year_and_month(year_month).pluck(:average)
     (durations.sum.to_f / durations.size / TIME_UNIT).round ROUND
   end
 
@@ -86,6 +86,6 @@ class MIInformation
 private
 
   def year_month
-    @year.to_s + '/' + @month.to_s
+    @year.to_s + '-' + @month.to_s
   end
 end

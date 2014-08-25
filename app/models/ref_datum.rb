@@ -1,5 +1,6 @@
 class RefDatum < ActiveRecord::Base
   has_many :events, dependent: :destroy
+  has_many :hourlies, dependent: :destroy
   belongs_to :business_system
 
   before_destroy :ensure_not_referenced_by_any_event

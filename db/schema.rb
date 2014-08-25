@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140818170816) do
+ActiveRecord::Schema.define(version: 20140825111141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,18 @@ ActiveRecord::Schema.define(version: 20140818170816) do
 
   add_index "events", ["ref_datum_id"], name: "index_events_on_ref_datum_id", using: :btree
   add_index "events", ["start_time"], name: "index_events_on_start_time", using: :btree
+
+  create_table "hourlies", force: true do |t|
+    t.datetime "hour"
+    t.float    "maximum"
+    t.float    "minimum"
+    t.float    "average"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "ref_datum_id"
+  end
+
+  add_index "hourlies", ["ref_datum_id"], name: "index_hourlies_on_ref_datum_id", using: :btree
 
   create_table "log_files", force: true do |t|
     t.string   "file_name"
