@@ -30,7 +30,7 @@
             <th>Business Systems</th>
             <th>Metric ID</th>
             <th>Response Times</th>
-            <th>Current SLA KPI</th>
+            <th class="hidden-sm">Current SLA KPI</th>
             <% period_id = 1 %>
             <% @periods.each do |period| %>
               <th>period_<%= period_id %> <small><%= period-1 %></small></th>
@@ -47,7 +47,7 @@
               <td rowspan="2"><%= mi.business_service_name %></td>
               <td rowspan="2"><%= mi.metric_id %></td>
               <td>weekly max hr</td>
-              <td><%= mi.current_sla_kpi.to_s %></td>
+              <td class="hidden-sm"><%= mi.current_sla_kpi.to_s %></td>
               <% period_id = 1 %>
               <% @periods.each do |period| %>
                 <td><%= mi.period_hourly_max(period_id) %></td>
@@ -67,7 +67,7 @@
             <!-- etc row for the period averages -->
             <tr>
               <td>weekly average</td>
-              <td><%= mi.current_sla_kpi %></td>
+              <td class="hidden-sm"><%= mi.current_sla_kpi %></td>
               <% period_id = 1 %>
               <% @periods.each do |period| %>
                 <td><%= mi.period_average period_id %></td>
