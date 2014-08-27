@@ -28,7 +28,7 @@
         <thead>
           <tr>
             <th>Business Systems</th>
-            <th>Metric ID</th>
+            <th class="hidden-sm">Metric ID</th>
             <th>Response Times</th>
             <th class="hidden-sm">Current SLA KPI</th>
             <% period_id = 1 %>
@@ -45,7 +45,7 @@
           <% @management_information.each do |mi| %>
             <tr>
               <td rowspan="2"><%= mi.business_service_name %></td>
-              <td rowspan="2"><%= mi.metric_id %></td>
+              <td class="hidden-sm" rowspan="2"><%= mi.metric_id %></td>
               <td>weekly max hr</td>
               <td class="hidden-sm"><%= mi.current_sla_kpi.to_s %></td>
               <% period_id = 1 %>
