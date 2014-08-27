@@ -5,7 +5,10 @@ class HourliesController < ApplicationController
   # GET /hourlies.json
   def index
     params[:filter] ||= RefDatum.first.id.to_s
-    @hourlies = Hourly.get_ref_datum_hourlies(params[:filter])
+    params[:from] ||= DateTime.now.strftime("%Y-%m-%d")
+    to = Date.parse(params[:from]).next_day(7).strftime("%Y-%m-%d")
+
+    @hourlies = Hourly.get_ref_datum_hourlies(params[:filter]).between_dates(params[:from],to)
     @refDatum = RefDatum.all
     @filter = RefDatum.find(params[:filter])
   end

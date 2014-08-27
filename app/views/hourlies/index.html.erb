@@ -13,6 +13,18 @@
 </div>
 
 <div class="col-md-9">
+<ul class="pager">
+  <!--<li class="previous disabled"><a href="#">&larr; Newer 7 Days</a></li>-->
+  <!--<li class="next"><a href="#">Older 7 Days &rarr;</a></li>-->
+  <% next_7_days = Date.parse(params[:from]).next_day(7).strftime("%Y-%m-%d")%>
+  <% previous = Date.parse(params[:from]).prev_day(7).strftime("%Y-%m-%d")%>
+  <li class="previous"><%= link_to '&larr; Previous 7 Days'.html_safe, params.merge(from: previous) %></li>
+    <li> <span class=class="navbar-text"><%= params[:from] %> <small>to</small> <%= next_7_days %></span>  </li>
+  <li class="next"><%= link_to 'Next 7 Days &rarr;'.html_safe, params.merge(from: next_7_days) %></li>
+
+</ul>
+  <p>
+  </p>
 <div class="panel" id="graph-panel">
 <svg id='chart' height="400px"></svg>
 <!--<h6><small><span class="pull-right">limited to first 1000 events</span></small></h6> -->
