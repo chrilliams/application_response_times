@@ -33,7 +33,7 @@ class MIInformation
     first_date = periods.unshift(@start_date)[period_number -1]
     last_date = periods.unshift(@start_date)[period_number]
     max=Hourly.business_service_hourlies(@business_service_id).between_dates(first_date, last_date).order('average desc').first
-    max.nil? ? '' : (max.to_f.average / TIME_UNIT ).round(ROUND)
+    max.nil? ? '' : (max.average.to_f / TIME_UNIT ).round(ROUND)
   end
 
 
