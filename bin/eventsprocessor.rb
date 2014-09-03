@@ -22,6 +22,8 @@ class EventsProcess
     Stage.where('code LIKE (?) ESCAPE "\" ', '%\_05\_%').each do |failed|
       Stage.where("app_id = ?", failed.app_id).destroy_all
     end
+    # remove entries where there is no app id
+    Stage.where("app_id = ''").delete_all
   end
 
   def process_events
@@ -74,16 +76,6 @@ class EventsProcess
     
 
 
-##leave for testing
-    conversation = Stage.where( conversation_id: '4c828cac19405f00000000388678e2')
-    
-    if conversation.count == 2
-      code1= conversation[0].code
-      code2= conversation[1].code
-      event_time1 = conversation[0].ev_time
-      event_time2 = conversation[1].ev_time
-      duration = ((event_time2 - event_time1) * 1000 ).to_i
-#      puts code1 + " " + duration.to_s + " milliseconds"
 
     end
   end
